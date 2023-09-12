@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Rota de login simulada
-@app.route('/login', methods=['POST'])
+@app.route('/auth/login', methods=['POST'])
 def mock_login():
     # return jsonify({'message': 'Login bem-sucedido (simulado)'}), 200
     data = request.get_json()
