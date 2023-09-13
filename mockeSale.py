@@ -31,5 +31,30 @@ def mock_login():
         }
         ), 200
 
+#rota de logout simulado
+@app.route('/auth/logout', methods=['DELETE'])
+def mock_logout():
+    # pega o argumento token na quarry e armazena na variável token_param
+    token_param = request.args.get('token')
+
+    # se o token estiver vazio, retorna um json com uma mensagem de erro
+    if not token_param:
+        return jsonify(
+            {
+                "statusCode": 498,
+                "name": "error",
+                "message": "Invalid, non-existent or empty token"
+            }
+        ), 498
+
+    # se estiver tudo certo, retorna um código 200 com uma mensagem
+    return jsonify(
+        {
+            "statusCode": 200,
+            "message": "successfully canceled token"
+        }
+    ), 200
+
+    
 if __name__ == '__main__':
     app.run(debug=True)
