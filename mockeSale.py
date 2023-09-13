@@ -31,7 +31,7 @@ def mock_login():
         }
         ), 200
 
-#rota de logout simulado
+# Rota de logout simulado
 @app.route('/auth/logout', methods=['DELETE'])
 def mock_logout():
     # pega o argumento token na quarry e armazena na variável token_param
@@ -55,6 +55,41 @@ def mock_logout():
         }
     ), 200
 
+@app.route('/leaflet/predictOffer', methods=['POST'])
+def leaflet_predictOffer():
+    # Pega o teken e o leafle do reader e armazana-os em variáveis
+    token   = request.headers.get('token')
+    leaflet = request.headers.get('leaflet')
+
+    # Se o token ou o leaflet estiver em branco, então retorna uma mensagem de erro
+    if not token or not leaflet:
+        return jsonify(
+            {
+                "statusCode": 422,
+                "name": "error",
+                "message": "request has fields empties"
+            }
+        ), 422
     
+    # Se tudo ocorrer bem, então retorna um json com os produtos e o código 200
+    return jsonify(
+        {
+                "leaflet_id": "6453bacbb6fed22ec5c1cd1e",
+                "request": [
+                    {
+                    "item_id": "56902796e33b5b9c565aa5ab",
+                    "product_id": "646cd32304ea8423670cafde",
+                    "value": 8.49,
+                    "dynamic": "OFERTA_DE_POR",
+                    "minimum_quantity": 1
+                    }
+                ],
+                "unidentified_leaflet_items_ids": [
+                    "56902796e33b5b9c565aa5ab"
+                ]
+            }
+    ), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
