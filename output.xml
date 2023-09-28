@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.12 on linux)" generated="20230927 22:17:04.143" rpa="false" schemaversion="4">
+<suite id="s1" name="Teste" source="/home/henrique/workspace/MyFlaskJourney/teste.robot">
+<test id="s1-t1" name="Cenário 1: Autenticação com email e senha corretos" line="71">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.275" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.274" endtime="20230927 22:17:04.275"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.276" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.275" endtime="20230927 22:17:04.276"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.274" endtime="20230927 22:17:04.276"/>
+</kw>
+<kw name="QUANDO o sistema validar as credenciais">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_correta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.278" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_correta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.277" endtime="20230927 22:17:04.278"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.279" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.278" endtime="20230927 22:17:04.280"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.287" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '62', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_correta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.287" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.287" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.280" endtime="20230927 22:17:04.287"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.288" endtime="20230927 22:17:04.288"/>
+</return>
+<msg timestamp="20230927 22:17:04.288" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.277" endtime="20230927 22:17:04.288"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.290" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.288" endtime="20230927 22:17:04.290"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.290" endtime="20230927 22:17:04.290"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.276" endtime="20230927 22:17:04.291"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo o token para o usuário">
+<kw name="QUANDO o sistema validar as credenciais">
+<var>${RESPONSE}</var>
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_correta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.294" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_correta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.293" endtime="20230927 22:17:04.294"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.295" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.295" endtime="20230927 22:17:04.296"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.301" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '62', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_correta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.301" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.302" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.296" endtime="20230927 22:17:04.302"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.302" endtime="20230927 22:17:04.302"/>
+</return>
+<msg timestamp="20230927 22:17:04.302" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.293" endtime="20230927 22:17:04.302"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.305" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.303" endtime="20230927 22:17:04.305"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.306" endtime="20230927 22:17:04.306"/>
+</return>
+<msg timestamp="20230927 22:17:04.306" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.292" endtime="20230927 22:17:04.306"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.307" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.307" endtime="20230927 22:17:04.308"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>token</arg>
+<arg>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.308" endtime="20230927 22:17:04.309"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.311" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.309" endtime="20230927 22:17:04.311"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.291" endtime="20230927 22:17:04.311"/>
+</kw>
+<tag>[TC-01] Autenticação com credenciais corretas</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.273" endtime="20230927 22:17:04.311"/>
+</test>
+<test id="s1-t2" name="Cenário 1: Requisição com email inexistente" line="77">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.318" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.317" endtime="20230927 22:17:04.318"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.320" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.319" endtime="20230927 22:17:04.321"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.313" endtime="20230927 22:17:04.321"/>
+</kw>
+<kw name="QUANDO o sistema verificar que o/a email está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@incorreto .com</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.329" endtime="20230927 22:17:04.329"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.322" endtime="20230927 22:17:04.329"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_incorreta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.331" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_incorreta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.330" endtime="20230927 22:17:04.332"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.333" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.332" endtime="20230927 22:17:04.333"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.340" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_incorreta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.340" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.341" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.333" endtime="20230927 22:17:04.341"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.341" endtime="20230927 22:17:04.341"/>
+</return>
+<msg timestamp="20230927 22:17:04.341" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.329" endtime="20230927 22:17:04.342"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.329" endtime="20230927 22:17:04.342"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.322" endtime="20230927 22:17:04.342"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.343" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.342" endtime="20230927 22:17:04.344"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.344" endtime="20230927 22:17:04.344"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.321" endtime="20230927 22:17:04.344"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo um código de erro">
+<arg>email</arg>
+<arg>incorreto</arg>
+<if>
+<branch type="IF" condition="$tipo == 'incorreto'">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<var>${RESPONSE}</var>
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@incorreto .com</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.349" endtime="20230927 22:17:04.349"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.348" endtime="20230927 22:17:04.349"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_incorreta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.352" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_incorreta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.351" endtime="20230927 22:17:04.352"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.353" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.353" endtime="20230927 22:17:04.354"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.361" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_incorreta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.362" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.362" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.354" endtime="20230927 22:17:04.362"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.362" endtime="20230927 22:17:04.363"/>
+</return>
+<msg timestamp="20230927 22:17:04.363" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.350" endtime="20230927 22:17:04.363"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.349" endtime="20230927 22:17:04.363"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.348" endtime="20230927 22:17:04.363"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.365" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.364" endtime="20230927 22:17:04.366"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.366" endtime="20230927 22:17:04.366"/>
+</return>
+<msg timestamp="20230927 22:17:04.366" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.347" endtime="20230927 22:17:04.366"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.346" endtime="20230927 22:17:04.366"/>
+</branch>
+<branch type="ELSE">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<var>${RESPONSE}</var>
+<status status="NOT RUN" starttime="20230927 22:17:04.367" endtime="20230927 22:17:04.367"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.367" endtime="20230927 22:17:04.367"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.346" endtime="20230927 22:17:04.367"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.368" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.367" endtime="20230927 22:17:04.368"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>ttl</arg>
+<arg>${1209600}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.369" endtime="20230927 22:17:04.372"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.374" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.372" endtime="20230927 22:17:04.374"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.345" endtime="20230927 22:17:04.374"/>
+</kw>
+<tag>[TC-02] Autenticação com credenciais incorretas</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.312" endtime="20230927 22:17:04.375"/>
+</test>
+<test id="s1-t3" name="Cenário 2: Requisição com senha inexistente" line="83">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.378" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.378" endtime="20230927 22:17:04.378"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.379" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.379" endtime="20230927 22:17:04.379"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.377" endtime="20230927 22:17:04.380"/>
+</kw>
+<kw name="QUANDO o sistema verificar que o/a senha está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@incorreto .com</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.381" endtime="20230927 22:17:04.381"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.381" endtime="20230927 22:17:04.381"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_incorreta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.383" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_incorreta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.382" endtime="20230927 22:17:04.383"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.384" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.384" endtime="20230927 22:17:04.385"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.390" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_incorreta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.390" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.391" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.385" endtime="20230927 22:17:04.391"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.391" endtime="20230927 22:17:04.391"/>
+</return>
+<msg timestamp="20230927 22:17:04.391" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.381" endtime="20230927 22:17:04.391"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.381" endtime="20230927 22:17:04.392"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.381" endtime="20230927 22:17:04.392"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.393" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.392" endtime="20230927 22:17:04.394"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.394" endtime="20230927 22:17:04.394"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.380" endtime="20230927 22:17:04.394"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo um código de erro">
+<arg>senha</arg>
+<arg>incorreto</arg>
+<if>
+<branch type="IF" condition="$tipo == 'incorreto'">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<var>${RESPONSE}</var>
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@incorreto .com</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.396" endtime="20230927 22:17:04.397"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.396" endtime="20230927 22:17:04.397"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>senha_incorreta</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.398" level="INFO">${Body} = {'username': 'email@correto.com', 'password': 'senha_incorreta'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.398" endtime="20230927 22:17:04.398"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.399" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.398" endtime="20230927 22:17:04.400"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.408" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "senha_incorreta"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.408" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.409" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.400" endtime="20230927 22:17:04.409"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.409" endtime="20230927 22:17:04.409"/>
+</return>
+<msg timestamp="20230927 22:17:04.409" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.397" endtime="20230927 22:17:04.410"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.397" endtime="20230927 22:17:04.410"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.396" endtime="20230927 22:17:04.410"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.411" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.410" endtime="20230927 22:17:04.411"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.412" endtime="20230927 22:17:04.412"/>
+</return>
+<msg timestamp="20230927 22:17:04.412" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.395" endtime="20230927 22:17:04.412"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.395" endtime="20230927 22:17:04.412"/>
+</branch>
+<branch type="ELSE">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<var>${RESPONSE}</var>
+<status status="NOT RUN" starttime="20230927 22:17:04.413" endtime="20230927 22:17:04.413"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.412" endtime="20230927 22:17:04.413"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.395" endtime="20230927 22:17:04.413"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.414" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.413" endtime="20230927 22:17:04.414"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>ttl</arg>
+<arg>${1209600}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.414" endtime="20230927 22:17:04.415"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.416" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.415" endtime="20230927 22:17:04.416"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.394" endtime="20230927 22:17:04.416"/>
+</kw>
+<tag>[TC-02] Autenticação com credenciais incorretas</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.376" endtime="20230927 22:17:04.417"/>
+</test>
+<test id="s1-t4" name="Cenário 1: Autenticação com email em branco" line="89">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.419" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.419" endtime="20230927 22:17:04.419"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.421" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.420" endtime="20230927 22:17:04.421"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.418" endtime="20230927 22:17:04.422"/>
+</kw>
+<kw name="QUANDO o sistema verificar que o/a email está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.423" endtime="20230927 22:17:04.423"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.423" endtime="20230927 22:17:04.423"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.425" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.424" endtime="20230927 22:17:04.425"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.427" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.426" endtime="20230927 22:17:04.427"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.432" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.432" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.432" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.427" endtime="20230927 22:17:04.432"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.432" endtime="20230927 22:17:04.432"/>
+</return>
+<msg timestamp="20230927 22:17:04.432" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.423" endtime="20230927 22:17:04.433"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.423" endtime="20230927 22:17:04.433"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.423" endtime="20230927 22:17:04.433"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.434" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.433" endtime="20230927 22:17:04.434"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.434" endtime="20230927 22:17:04.434"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.422" endtime="20230927 22:17:04.435"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo um código de erro">
+<arg>email</arg>
+<arg>branco</arg>
+<if>
+<branch type="IF" condition="$tipo == 'incorreto'">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<var>${RESPONSE}</var>
+<status status="NOT RUN" starttime="20230927 22:17:04.436" endtime="20230927 22:17:04.436"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.436" endtime="20230927 22:17:04.436"/>
+</branch>
+<branch type="ELSE">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<var>${RESPONSE}</var>
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.439" endtime="20230927 22:17:04.439"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.438" endtime="20230927 22:17:04.439"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.443" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.441" endtime="20230927 22:17:04.443"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.444" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.443" endtime="20230927 22:17:04.444"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.449" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.449" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.449" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.444" endtime="20230927 22:17:04.449"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.449" endtime="20230927 22:17:04.449"/>
+</return>
+<msg timestamp="20230927 22:17:04.449" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.440" endtime="20230927 22:17:04.449"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.439" endtime="20230927 22:17:04.449"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.438" endtime="20230927 22:17:04.450"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.451" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.450" endtime="20230927 22:17:04.451"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.451" endtime="20230927 22:17:04.451"/>
+</return>
+<msg timestamp="20230927 22:17:04.451" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.437" endtime="20230927 22:17:04.451"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.436" endtime="20230927 22:17:04.452"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.436" endtime="20230927 22:17:04.452"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.453" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.452" endtime="20230927 22:17:04.453"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>ttl</arg>
+<arg>${1209600}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.454" endtime="20230927 22:17:04.456"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.457" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.456" endtime="20230927 22:17:04.457"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.435" endtime="20230927 22:17:04.457"/>
+</kw>
+<tag>[TC-03] Autenticação com credenciais em branco</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.417" endtime="20230927 22:17:04.458"/>
+</test>
+<test id="s1-t5" name="Cenário 2: Autenticação com senha em branco" line="95">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.461" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.460" endtime="20230927 22:17:04.461"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.463" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.462" endtime="20230927 22:17:04.463"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.459" endtime="20230927 22:17:04.463"/>
+</kw>
+<kw name="QUANDO o sistema verificar que o/a senha está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.465" endtime="20230927 22:17:04.465"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.464" endtime="20230927 22:17:04.465"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.469" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.467" endtime="20230927 22:17:04.469"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.470" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.469" endtime="20230927 22:17:04.471"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.477" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.477" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.478" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.471" endtime="20230927 22:17:04.478"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.478" endtime="20230927 22:17:04.478"/>
+</return>
+<msg timestamp="20230927 22:17:04.479" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.466" endtime="20230927 22:17:04.479"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.466" endtime="20230927 22:17:04.479"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.464" endtime="20230927 22:17:04.479"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.481" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.479" endtime="20230927 22:17:04.481"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.481" endtime="20230927 22:17:04.481"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.464" endtime="20230927 22:17:04.481"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo um código de erro">
+<arg>senha</arg>
+<arg>branco</arg>
+<if>
+<branch type="IF" condition="$tipo == 'incorreto'">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<var>${RESPONSE}</var>
+<status status="NOT RUN" starttime="20230927 22:17:04.483" endtime="20230927 22:17:04.484"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.483" endtime="20230927 22:17:04.484"/>
+</branch>
+<branch type="ELSE">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<var>${RESPONSE}</var>
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.486" endtime="20230927 22:17:04.487"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.486" endtime="20230927 22:17:04.487"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.489" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.488" endtime="20230927 22:17:04.489"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.490" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.489" endtime="20230927 22:17:04.491"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.497" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.497" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.498" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.491" endtime="20230927 22:17:04.498"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.498" endtime="20230927 22:17:04.498"/>
+</return>
+<msg timestamp="20230927 22:17:04.498" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.487" endtime="20230927 22:17:04.498"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.487" endtime="20230927 22:17:04.499"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.486" endtime="20230927 22:17:04.499"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.500" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.499" endtime="20230927 22:17:04.500"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.500" endtime="20230927 22:17:04.501"/>
+</return>
+<msg timestamp="20230927 22:17:04.501" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.485" endtime="20230927 22:17:04.501"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.484" endtime="20230927 22:17:04.501"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.483" endtime="20230927 22:17:04.502"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.503" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.502" endtime="20230927 22:17:04.503"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>ttl</arg>
+<arg>${1209600}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.503" endtime="20230927 22:17:04.505"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.506" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.506" endtime="20230927 22:17:04.506"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.482" endtime="20230927 22:17:04.506"/>
+</kw>
+<tag>[TC-03] Autenticação com credenciais em branco</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.458" endtime="20230927 22:17:04.507"/>
+</test>
+<test id="s1-t6" name="Cenário 3: Autenticação com email e senha em branco" line="100">
+<kw name="DADO que o SALE receba uma requisição POST para autenticação">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${HEADERS}</var>
+<arg>content-type=application-json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.510" level="INFO">${HEADERS} = {'content-type': 'application-json'}</msg>
+<status status="PASS" starttime="20230927 22:17:04.510" endtime="20230927 22:17:04.510"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.511" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.511" endtime="20230927 22:17:04.512"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.509" endtime="20230927 22:17:04.512"/>
+</kw>
+<kw name="QUANDO o sistema verificar que o/a senha e email está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.514" endtime="20230927 22:17:04.514"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.514" endtime="20230927 22:17:04.514"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.516" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.515" endtime="20230927 22:17:04.516"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.517" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.516" endtime="20230927 22:17:04.518"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.523" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.523" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.523" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.518" endtime="20230927 22:17:04.523"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.523" endtime="20230927 22:17:04.523"/>
+</return>
+<msg timestamp="20230927 22:17:04.524" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.514" endtime="20230927 22:17:04.524"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.514" endtime="20230927 22:17:04.524"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.513" endtime="20230927 22:17:04.524"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.526" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.524" endtime="20230927 22:17:04.526"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.526" endtime="20230927 22:17:04.526"/>
+</return>
+<status status="PASS" starttime="20230927 22:17:04.513" endtime="20230927 22:17:04.527"/>
+</kw>
+<kw name="ENTÃO o SALE deve enviar um JSON de resposta contendo um código de erro">
+<arg>email e senha</arg>
+<arg>branco</arg>
+<if>
+<branch type="IF" condition="$tipo == 'incorreto'">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está incorreto/a" sourcename="QUANDO o sistema verificar que o/a ${campo} está incorreto/a">
+<var>${RESPONSE}</var>
+<status status="NOT RUN" starttime="20230927 22:17:04.529" endtime="20230927 22:17:04.529"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.528" endtime="20230927 22:17:04.529"/>
+</branch>
+<branch type="ELSE">
+<kw name="QUANDO o sistema verificar que o/a ${campo} está em branco" sourcename="QUANDO o sistema verificar que o/a ${campo} está em branco">
+<var>${RESPONSE}</var>
+<if>
+<branch type="IF" condition="$campo == email">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>''</arg>
+<arg>senha_qualquer</arg>
+<status status="NOT RUN" starttime="20230927 22:17:04.531" endtime="20230927 22:17:04.531"/>
+</kw>
+<status status="NOT RUN" starttime="20230927 22:17:04.530" endtime="20230927 22:17:04.531"/>
+</branch>
+<branch type="ELSE">
+<kw name="Login e Validar token">
+<var>${RESPONSE}</var>
+<arg>email@correto.com</arg>
+<arg>''</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${Body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230927 22:17:04.533" level="INFO">${Body} = {'username': 'email@correto.com', 'password': "''"}</msg>
+<status status="PASS" starttime="20230927 22:17:04.532" endtime="20230927 22:17:04.533"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=${alias}</arg>
+<arg>url=${localhost}:${porta}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230927 22:17:04.535" level="INFO">Creating Session using : alias=sale_api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230927 22:17:04.534" endtime="20230927 22:17:04.535"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPONSE}</var>
+<arg>alias=${alias}</arg>
+<arg>url=/auth/login</arg>
+<arg>json=${Body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230927 22:17:04.542" level="INFO">POST Request : url=http://127.0.0.1:5000/auth/login 
+ path_url=/auth/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"username": "email@correto.com", "password": "\'\'"}' 
+ </msg>
+<msg timestamp="20230927 22:17:04.542" level="INFO">POST Response : url=http://127.0.0.1:5000/auth/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.3.7 Python/3.10.12', 'Date': 'Thu, 28 Sep 2023 01:17:04 GMT', 'Content-Type': 'application/json', 'Content-Length': '277', 'Connection': 'close'} 
+ body={
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+ 
+ </msg>
+<msg timestamp="20230927 22:17:04.542" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.536" endtime="20230927 22:17:04.542"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.543" endtime="20230927 22:17:04.543"/>
+</return>
+<msg timestamp="20230927 22:17:04.543" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.531" endtime="20230927 22:17:04.543"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.531" endtime="20230927 22:17:04.543"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.530" endtime="20230927 22:17:04.543"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.545" level="INFO">Resposta Retornada: 
+{
+  "created": "Wed, 27 Sep 2023 22:17:04 GMT",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "ttl": 1209600,
+  "userId": "646e6ce286a5a138a515e0b6"
+}
+</msg>
+<status status="PASS" starttime="20230927 22:17:04.544" endtime="20230927 22:17:04.545"/>
+</kw>
+<return>
+<value>${RESPONSE}</value>
+<status status="PASS" starttime="20230927 22:17:04.546" endtime="20230927 22:17:04.546"/>
+</return>
+<msg timestamp="20230927 22:17:04.546" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.529" endtime="20230927 22:17:04.546"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.529" endtime="20230927 22:17:04.546"/>
+</branch>
+<status status="PASS" starttime="20230927 22:17:04.528" endtime="20230927 22:17:04.546"/>
+</if>
+<kw name="Log" library="BuiltIn">
+<arg>Resposta Retornada: ${\n}${RESPONSE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.547" level="INFO">Resposta Retornada: 
+&lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.547" endtime="20230927 22:17:04.547"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPONSE.json()}</arg>
+<arg>ttl</arg>
+<arg>${1209600}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20230927 22:17:04.547" endtime="20230927 22:17:04.549"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>JSON: ${RESPONSE.json}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 22:17:04.551" level="INFO">JSON: &lt;bound method Response.json of &lt;Response [200]&gt;&gt;</msg>
+<status status="PASS" starttime="20230927 22:17:04.549" endtime="20230927 22:17:04.551"/>
+</kw>
+<status status="PASS" starttime="20230927 22:17:04.528" endtime="20230927 22:17:04.551"/>
+</kw>
+<tag>[TC-03] Autenticação com credenciais em branco</tag>
+<tag>Funcionalidade 01</tag>
+<status status="PASS" starttime="20230927 22:17:04.507" endtime="20230927 22:17:04.552"/>
+</test>
+<status status="PASS" starttime="20230927 22:17:04.145" endtime="20230927 22:17:04.553"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">[TC-01] Autenticação com credenciais corretas</stat>
+<stat pass="2" fail="0" skip="0">[TC-02] Autenticação com credenciais incorretas</stat>
+<stat pass="3" fail="0" skip="0">[TC-03] Autenticação com credenciais em branco</stat>
+<stat pass="6" fail="0" skip="0">Funcionalidade 01</stat>
+</tag>
+<suite>
+<stat pass="6" fail="0" skip="0" id="s1" name="Teste">Teste</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

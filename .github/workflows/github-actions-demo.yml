@@ -20,22 +20,17 @@ jobs:
       run: |
         python3 mockeSale.py
 
-  # Roda_Os_Testes:
-  #   runs-on: self-hosted
+  Roda_Os_Testes:
+    runs-on: self-hosted
 
-  #   steps:
-  #   - name: Check out code
-  #     uses: actions/checkout@v2
-
-  #   - name: Install Python
-  #     run: |
-  #       sudo apt-get update
-  #       sudo apt-get install python3
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
       
-  #   - name: Install Robot and libraries
-  #     run: |
-  #       pip install robotframework
-  #       pip install robotframework-requests
+    - name: Install Robot and libraries
+      run: |
+        pip install robotframework
+        pip install robotframework-requests
 
-  #   - name: Run Tests
-  #     run: robot testes/login_test.robot
+    - name: Run Tests
+      run: robot teste.robot
